@@ -1,0 +1,188 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/EventChain",
+  "title": "Json schema for an event chain",
+  "definitions": {
+    "EventChain": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "cooldown": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "trigger": {
+          "type": "object",
+          "properties": {
+            "comparator": {
+              "type": "string",
+              "enum": [
+                "lt",
+                "lte",
+                "eq",
+                "gte",
+                "gt"
+              ]
+            },
+            "target": {
+              "$ref": "#/definitions/StateVariable"
+            },
+            "value": {
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "comparator",
+            "target",
+            "value"
+          ]
+        },
+        "autoSelect": {
+          "type": "boolean",
+          "description": "when set to true, this chain will be selected as soon as its trigger is satisfied"
+        },
+        "events": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "effects": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "boolean"
+                }
+              },
+              "choices": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "text": {
+                      "type": "string"
+                    },
+                    "next": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/Outcome"
+                      }
+                    },
+                    "effects": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "required": [
+                    "text",
+                    "next"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "next": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Outcome"
+                }
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "text"
+            ]
+          },
+          "required": [
+            "start"
+          ]
+        },
+        "effects": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "description": {
+                "type": "string"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "add",
+                  "subtract"
+                ]
+              },
+              "target": {
+                "$ref": "#/definitions/StateVariable"
+              },
+              "value": {
+                "type": "number"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "instant",
+                  "permanent"
+                ]
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "operation",
+              "target",
+              "value",
+              "type"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "events"
+      ]
+    },
+    "Outcome": {
+      "type": "object",
+      "properties": {
+        "event": {
+          "type": "string"
+        },
+        "in": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "weight": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "effects": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "event"
+      ]
+    },
+    "StateVariable": {
+      "type": "string",
+      "enum": [
+        "population",
+        "ecology",
+        "money"
+      ]
+    }
+  }
+}

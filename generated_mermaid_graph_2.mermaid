@@ -1,0 +1,38 @@
+flowchart LR;
+missile_sent{{missile_sent fa:fa-question-circle}} --> choice_missile_sent_0(["“Now I am become death..“"])
+ missile_sent --> effect_missile_sent_0[/effect_missile_sent_0/]
+style effect_missile_sent_0 fill:#f00,color:#fff,stroke:#066,stroke-width:5px
+ missile_sent --> effect_missile_sent_1[/effect_missile_sent_1/]
+style effect_missile_sent_1 fill:#0f0,color:#fff,stroke:#f66,stroke-width:1px,stroke-dasharray: 5 5
+start{{start fa:fa-question-circle}} --> choice_start_0(["“These plants will be grow back, no need to worr"])
+choice_start_0 --"  in 2"--> issue_ignored
+start{{start fa:fa-question-circle}} --> choice_start_1(["“This is strange, I should look into it“"])
+choice_start_1 --" "--> investigation_finds_bees_issue
+ start --> effect_start_0[/effect_start_0/]
+style effect_start_0 fill:#0f0,color:#fff,stroke:#066,stroke-width:5px
+bees_are_decreasing{{bees_are_decreasing fa:fa-question-circle}} --> choice_bees_are_decreasing_0(["Quietly send a small missile on a subset of your s"])
+choice_bees_are_decreasing_0 --" "--> missile_sent
+ choice_bees_are_decreasing_0 --> effect_choice_bees_are_decreasing_0_0[/effect_choice_bees_are_decreasing_0_0/]
+style effect_choice_bees_are_decreasing_0_0 fill:#0f0,color:#fff,stroke:#f66,stroke-width:1px,stroke-dasharray: 5 5
+bees_are_decreasing{{bees_are_decreasing fa:fa-question-circle}} --> choice_bees_are_decreasing_1(["“There must be another way. I could take my time"])
+choice_bees_are_decreasing_1 --" 2"--> no_bees_solution
+choice_bees_are_decreasing_1 --" "--> bees_solution
+no_bees_solution{{no_bees_solution fa:fa-question-circle}} --> choice_no_bees_solution_0(["Do nothing and hope for the best. “Go Go bees! h"])
+choice_no_bees_solution_0 --"  in 2"--> bees_issue_still_present
+no_bees_solution{{no_bees_solution fa:fa-question-circle}} --> choice_no_bees_solution_1(["Quietly send a small missile on a subset of your s"])
+choice_no_bees_solution_1 --" "--> missile_sent
+ choice_no_bees_solution_1 --> effect_choice_no_bees_solution_1_0[/effect_choice_no_bees_solution_1_0/]
+style effect_choice_no_bees_solution_1_0 fill:#0f0,color:#fff,stroke:#f66,stroke-width:1px,stroke-dasharray: 5 5
+investigation_finds_bees_issue{{investigation_finds_bees_issue fa:fa-question-circle}} --> choice_investigation_finds_bees_issue_0(["“Bees are foundation of all biomes! Catastrophe."])
+choice_investigation_finds_bees_issue_0 --" "--> bees_are_decreasing
+bees_issue_still_present[The flora/bees decrease issue is still present] --" "--> bees_are_decreasing
+bees_solution{{bees_solution fa:fa-question-circle}} --> choice_bees_solution_0(["“Still, just let the bees be, there were here be"])
+choice_bees_solution_0 --" "--> missile_sent
+ choice_bees_solution_0 --> effect_choice_bees_solution_0_0[/effect_choice_bees_solution_0_0/]
+style effect_choice_bees_solution_0_0 fill:#0f0,color:#fff,stroke:#f66,stroke-width:1px,stroke-dasharray: 5 5
+bees_solution{{bees_solution fa:fa-question-circle}} --> choice_bees_solution_1(["“It would take time, but I could plant more flow"])
+choice_bees_solution_1 --"  in 2"--> flower_planted
+ flower_planted --> effect_flower_planted_0[/effect_flower_planted_0/]
+style effect_flower_planted_0 fill:#f00,color:#fff,stroke:#066,stroke-width:5px
+issue_ignored{{issue_ignored fa:fa-question-circle}} --> choice_issue_ignored_0(["“I guess I'm forced to look into it..“"])
+choice_issue_ignored_0 --" "--> investigation_finds_bees_issue
