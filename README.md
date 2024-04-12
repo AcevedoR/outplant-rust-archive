@@ -1,3 +1,5 @@
+this is an archive of https://github.com/AcevedoR/outplant, which was rewritten in TS
+
 # Outplant
 
 A simple text game POC.
